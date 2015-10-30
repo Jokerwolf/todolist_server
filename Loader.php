@@ -5,11 +5,7 @@
  * Date: 27/10/15
  * Time: 23:54
  */
-
-namespace com\despairsoftware\todo\server;
-
-
-use com\despairsoftware\todo\server\controllers\BaseController;
+require_once($_SERVER['DOCUMENT_ROOT'] .'/server/controllers/Error.php');
 
 class Loader {
     private $controller;
@@ -18,17 +14,20 @@ class Loader {
 
     public function __construct($url_values){
         $this -> url_values = $url_values;
+
         if ($this -> url_values['controller'] == "") {
-            $this -> controller = "home";
+            $this -> controller = "Home";
         } else {
             $this->controller = $this -> url_values['controller'];
         }
 
         if ($this -> url_values['action'] == "") {
-            $this -> action = "index";
+            $this -> action = "Index";
         } else {
             $this -> action = $this -> url_values['action'];
         }
+
+        var_dump($this -> url_values);
     }
 
     public function CreateController(){
@@ -36,10 +35,10 @@ class Loader {
             return new Error(BAD_URL, $this -> controller);
         }
 
-        if (!function_exists($this -> action)){
+        if (!method_exists($this -> controller, $this -> action)){
             return new Error(BAD_URL, $this -> action);
         }
 
-        return new BaseController();
+        return new $this -> controller($this -> action, $this -> url_values);
     }
 }

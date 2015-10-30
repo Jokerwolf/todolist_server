@@ -6,9 +6,6 @@
  * Time: 00:29
  */
 
-namespace com\despairsoftware\todo\server\models;
-
-
 class BaseModel {
 
 }

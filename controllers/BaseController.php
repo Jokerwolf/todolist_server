@@ -6,7 +6,7 @@
  * Time: 22:25
  */
 
-class BaseController {
+abstract class BaseController {
     private $action;
     private $url_values;
 

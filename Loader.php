@@ -24,7 +24,7 @@ class Loader {
             $this->controller = $this -> url_values['controller'];
         }
 
-        if ($this -> url_values['acti52on'] == "") {
+        if ($this -> url_values['action'] == "") {
             $this -> action = "index";
         } else {
             $this -> action = $this -> url_values['action'];

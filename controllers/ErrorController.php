@@ -5,9 +5,8 @@
  * Date: 28/10/15
  * Time: 00:49
  */
-require_once($_SERVER['DOCUMENT_ROOT'] .'/server/controllers/BaseController.php');
 
-class Error extends BaseController {
+class ErrorController extends BaseController {
     private $type;
     private $message;
 
@@ -21,3 +20,4 @@ class Error extends BaseController {
         echo "Error: " .$this -> type. "<br />Message: " .$this -> message. "<br />";
     }
 }
+?>

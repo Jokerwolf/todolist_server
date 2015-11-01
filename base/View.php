@@ -29,7 +29,7 @@ class View {
                 require($this -> viewFile);
             }
         } else {
-            require($_SERVER['DOCUMENT_ROOT']. "/views/Error/badview.php");
+            require($_SERVER['DOCUMENT_ROOT']. "/views/Error/badviewfile.php");
         }
     }
 

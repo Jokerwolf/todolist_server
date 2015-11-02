@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] .'/db/dto/DefaultEntity.php');
+require_once($_SERVER['DOCUMENT_ROOT'] .'/server/db/dto/DefaultEntity.php');
 
 class TodoList extends DefaultEntity {
     private $title;

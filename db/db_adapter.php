@@ -1,4 +1,6 @@
 <?php
+require($_SERVER['DOCUMENT_ROOT'] .'/server/db/dto/TodoList.php');
+
 class DB_Adapter {
     private $db_connection;
     private $user_id;
@@ -40,10 +42,13 @@ class DB_Adapter {
             if(!$stmt -> error)
             {
                 while($stmt -> fetch()){
-
+                    $list = new TodoList($row['id'], $row['title'], $this -> user_id);
+                    array_push($result, $list);
                 }
             }
         }
+
+        return $result;
     }
 
 

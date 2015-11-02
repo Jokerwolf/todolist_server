@@ -1,5 +1,5 @@
 <?php
-require_once ($_SERVER['DOCUMENT_ROOT'] .'/db/db_connection.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] .'/server/db/db_connection.php');
 
 class DB_Controller {
     private static $db_instance;

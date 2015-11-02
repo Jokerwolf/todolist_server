@@ -1,0 +1,8 @@
+CREATE DATABASE `todo_list` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE TABLE `lists` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` text NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `is_deleted` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;

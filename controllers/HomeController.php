@@ -15,8 +15,13 @@ class HomeController extends BaseController {
         $this -> model = new HomeModel();
     }
 
-    protected function Index(){
-        $this -> view -> output($this -> model -> get());
+    protected function index(){
+        $this -> view -> output(null, null);
+    }
+
+    protected function getLists(){
+        var_dump(json_encode($this -> model -> get()));
+        return json_encode($this -> model -> get());
     }
 }
 ?>

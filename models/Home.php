@@ -6,6 +6,7 @@ class HomeModel extends BaseModel {
         $this -> viewModel -> set("pageTitle", "todo");
         $this -> viewModel -> set("lists", $this -> dbAdapter -> getUserLists());
 
-        return $this -> viewModel;
+        //return $this -> viewModel;
+        return $this -> dbAdapter -> getUserLists();
     }
 }

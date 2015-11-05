@@ -1,8 +1,22 @@
-CREATE DATABASE `todo_list` /*!40100 DEFAULT CHARACTER SET utf8 */;
-CREATE TABLE `lists` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` text NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `is_deleted` bit(1) DEFAULT NULL,
+select * from items;
+insert into CREATE TABLE `items` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `value` text NOT NULL,
+  `list_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `lists` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` text NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `is_deleted` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `users` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -20,8 +20,7 @@ class HomeController extends BaseController {
     }
 
     protected function getLists(){
-        var_dump(json_encode($this -> model -> get()));
-        return json_encode($this -> model -> get());
+        echo json_encode($this -> model -> get());
     }
 }
 ?>

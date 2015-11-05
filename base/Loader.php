@@ -27,7 +27,7 @@ class Loader {
         }
 
         //DEBUG
-        var_dump($this -> url_values);
+        //var_dump($this -> url_values);
     }
 
     public function createController(){

@@ -32,8 +32,10 @@ class DB_Adapter {
 
 
     function getUserLists(){
-        $stmt = $this -> db_connection -> prepare("SELECT *
-            FROM lists WHERE is_deleted = 0");
+        $stmt = $this -> db_connection -> prepare(
+            "SELECT *
+             FROM lists l LEFT JOIN items i ON i.list_id = l.id
+             WHERE l.is_deleted = 0");
 
         $result = [];
 
@@ -42,7 +44,8 @@ class DB_Adapter {
             if(!$stmt -> error)
             {
                 while($stmt -> fetch()){
-                    $list = new TodoList($row['id'], $row['title'], $this -> user_id);
+                    //if (in_array())
+                    $list = new TodoList($row['id'], $row['title'], $this -> user_id, null);
                     array_push($result, $list);
                 }
             }

@@ -1,5 +1,6 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] .'/server/db/dto/TodoList.php');
+require($_SERVER['DOCUMENT_ROOT'] .'/server/db/dto/TodoListItem.php');
 
 class DB_Adapter {
     private $db_connection;
@@ -33,9 +34,10 @@ class DB_Adapter {
 
     function getUserLists(){
         $stmt = $this -> db_connection -> prepare(
-            "SELECT *
-             FROM lists l LEFT JOIN items i ON i.list_id = l.id
-             WHERE l.is_deleted = 0");
+            "SELECT l.id AS list_id, l.title, i.id AS item_id, i.value, i.is_completed
+             FROM lists l LEFT JOIN items i ON l.id = i.list_id
+             WHERE l.is_deleted = 0
+             ORDER BY l.id");
 
         $result = [];
 
@@ -44,13 +46,22 @@ class DB_Adapter {
             if(!$stmt -> error)
             {
                 while($stmt -> fetch()){
-                    //if (in_array())
-                    $list = new TodoList($row['id'], $row['title'], $this -> user_id, null);
-                    array_push($result, $list);
+                    if (!in_array($row['list_id'], $result)) {
+                        //New list in the $row
+                        $items = [];
+                        $items[$row['item_id']] = new TodoListItem($row['item_id'], $row['value'], $row['is_completed']);
+
+                        $list = new TodoList($row['list_id'], $row['title'], $this -> user_id, $items);
+                        $result[$list -> id] = $list;
+                    } else {
+                        //list already in the $result
+                        $result[$row['list_id']] -> items[$row["item_id"]] = new TodoListItem($row['item_id'], $row['value'], $row['is_completed']);
+                    }
                 }
             }
         }
 
+        //var_dump($result);
         return $result;
     }
 

@@ -46,7 +46,7 @@ class DB_Adapter {
             if(!$stmt -> error)
             {
                 while($stmt -> fetch()){
-                    if (!in_array($row['list_id'], $result)) {
+                    if (!array_key_exists($row['list_id'], $result)) {
                         //New list in the $row
                         $items = [];
                         $items[$row['item_id']] = new TodoListItem($row['item_id'], $row['value'], $row['is_completed']);
@@ -55,7 +55,7 @@ class DB_Adapter {
                         $result[$list -> id] = $list;
                     } else {
                         //list already in the $result
-                        $result[$row['list_id']] -> items[$row["item_id"]] = new TodoListItem($row['item_id'], $row['value'], $row['is_completed']);
+                        $result[$row['list_id']] -> items[$row['item_id']] = new TodoListItem($row['item_id'], $row['value'], $row['is_completed']);
                     }
                 }
             }

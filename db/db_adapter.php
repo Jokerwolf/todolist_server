@@ -49,13 +49,17 @@ class DB_Adapter {
                     if (!array_key_exists($row['list_id'], $result)) {
                         //New list in the $row
                         $items = [];
-                        $items[$row['item_id']] = new TodoListItem($row['item_id'], $row['value'], $row['is_completed']);
+                        if ($row['item_id'] != null) {
+                            $items[$row['item_id']] = new TodoListItem($row['item_id'], $row['value'], $row['is_completed']);
+                        }
 
                         $list = new TodoList($row['list_id'], $row['title'], $this -> user_id, $items);
                         $result[$list -> id] = $list;
                     } else {
                         //list already in the $result
-                        $result[$row['list_id']] -> items[$row['item_id']] = new TodoListItem($row['item_id'], $row['value'], $row['is_completed']);
+                        if ($row['item_id'] != null) {
+                            $result[$row['list_id']]->items[$row['item_id']] = new TodoListItem($row['item_id'], $row['value'], $row['is_completed']);
+                        }
                     }
                 }
             }

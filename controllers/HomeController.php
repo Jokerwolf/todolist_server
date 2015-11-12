@@ -22,5 +22,9 @@ class HomeController extends BaseController {
     protected function getLists(){
         echo json_encode($this -> model -> get());
     }
+
+    protected function saveLists($lists = []){
+        $this -> model -> save($lists);
+    }
 }
 ?>

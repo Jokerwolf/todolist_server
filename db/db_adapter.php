@@ -71,12 +71,13 @@ class DB_Adapter {
 
 
     function addList($list){
+        $list = new TodoList(-1, "My List", $this -> user_id, null);
         $stmt = $this -> db_connection -> prepare("INSERT INTO lists
             (title, user_id)
             VALUES (?, ?)");
 
         $stmt -> bind_param('si', $title, $user_id);
-        $title = $list -> getTitle();
+        $title = $list -> title;
         $user_id = $this -> user_id;
 
         if ($stmt -> execute()){

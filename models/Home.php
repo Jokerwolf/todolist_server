@@ -6,4 +6,11 @@ class HomeModel extends BaseModel {
 
         return $this -> viewModel -> get("lists");
     }
+
+    public function save($lists){
+        $this -> dbAdapter -> addList([]);
+//        foreach($lists as $list){
+//            $this -> dbAdapter -> addList($list);
+//        }
+    }
 }

@@ -8,9 +8,8 @@ class HomeModel extends BaseModel {
     }
 
     public function save($lists){
-        $this -> dbAdapter -> addList([]);
-//        foreach($lists as $list){
-//            $this -> dbAdapter -> addList($list);
-//        }
+        foreach($lists as $list){
+            $this -> dbAdapter -> addList($list);
+        }
     }
 }

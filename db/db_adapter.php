@@ -85,6 +85,21 @@ class DB_Adapter {
 
     }
 
+    function updateList($list){
+        $stmt = $this -> db_connection -> prepare("UPDATE lists
+            SET title = ?
+            WHERE id = ?");
+
+        $stmt -> bind_param('si', $title, $list_id);
+        $title = $list -> title;
+        $list_id = $list -> id;
+
+        if ($stmt -> execute()){
+            echo 'Updated <br />';
+        }
+
+    }
+
     /** Users **/
     public function login($username, $pwd){
         $stmt = $this -> db_connection -> prepare(

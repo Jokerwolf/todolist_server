@@ -32,6 +32,7 @@ class DB_Adapter {
     }
 
 
+    /** Lists **/
     function getUserLists(){
         $stmt = $this -> db_connection -> prepare(
             "SELECT l.id AS list_id, l.title, i.id AS item_id, i.value, i.is_completed
@@ -69,9 +70,7 @@ class DB_Adapter {
         return $result;
     }
 
-
     function addList($list){
-        $list = new TodoList(-1, "My List", $this -> user_id, null);
         $stmt = $this -> db_connection -> prepare("INSERT INTO lists
             (title, user_id)
             VALUES (?, ?)");
@@ -84,6 +83,28 @@ class DB_Adapter {
             echo 'Added <br />';
         }
 
+    }
+
+    /** Users **/
+    public function login($username, $pwd){
+        $stmt = $this -> db_connection -> prepare(
+            "SELECT *
+             FROM users
+             WHERE username = ? AND password = ?");
+
+        $stmt -> bind_param('ss', $username, $pwd);
+
+        if ($stmt -> execute()){
+            $row = $this -> bind_result_array($stmt);
+            if(!$stmt -> error) {
+                while($stmt -> fetch()){
+                    if ($row['id']){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
 ?>

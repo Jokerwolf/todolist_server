@@ -75,14 +75,12 @@ class DB_Adapter {
             (title, user_id)
             VALUES (?, ?)");
 
-        $stmt -> bind_param('si', $title, $user_id);
-        $title = $list -> title;
-        $user_id = $this -> user_id;
+        $stmt -> bind_param('si', $list -> title, $this -> user_id);
 
         if ($stmt -> execute()){
-            echo 'Added <br />';
+            echo 'Added list <br />';
+            return $stmt -> insert_id;
         }
-
     }
 
     function updateList($list){
@@ -90,14 +88,34 @@ class DB_Adapter {
             SET title = ?
             WHERE id = ?");
 
-        $stmt -> bind_param('si', $title, $list_id);
-        $title = $list -> title;
-        $list_id = $list -> id;
+        $stmt -> bind_param('si', $list -> title, $list -> id);
 
         if ($stmt -> execute()){
             echo 'Updated <br />';
         }
+    }
 
+    function addItem($item, $list_id){
+        $stmt = $this -> db_connection -> prepare("INSERT INTO items
+            (value, list_id, is_completed)
+            VALUES (?, ?, ?)");
+
+        $stmt -> bind_param('sii', $item -> text, $list_id, $item -> isDone);
+        if ($stmt -> execute()){
+            echo 'Item added <br />';
+            return $stmt -> insert_id;
+        }
+    }
+
+    function updateItem($item){
+        $stmt = $this -> db_connection -> prepare("UPDATE items
+            SET value = ?, is_completed = ? WHERE id = ?");
+
+        $stmt -> bind_param('sii', $item -> text, $item -> isDone, $item -> id);
+
+        if ($stmt -> execute()){
+            echo 'Updated item <br />';
+        }
     }
 
     /** Users **/

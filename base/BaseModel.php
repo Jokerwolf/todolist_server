@@ -13,7 +13,8 @@ abstract class BaseModel {
     protected $viewModel;
     protected $dbAdapter;
 
-    protected $userId = 0;
+    //TODO Remove hardcode
+    protected $userId = 1;
 
     //create the base and utility objects available to all models on model creation
     public function __construct()

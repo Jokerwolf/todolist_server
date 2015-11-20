@@ -9,23 +9,39 @@ class HomeModel extends BaseModel {
 
     public function save($lists){
         foreach($lists as $list){
-            if ($list -> id > 0){
-                //Update
-                $this -> dbAdapter -> updateList($list);
-            } else {
-                //Insert
-                $list -> id = $this -> dbAdapter -> addList($list);
-            }
+            saveList($list);
+        }
+    }
 
-            foreach($list -> items as $item){
-                if ($item -> id > 0){
-                    //Update
-                    $this -> dbAdapter -> updateItem($item);
-                } else {
-                    //Insert
-                    $item -> id = $this -> dbAdapter -> addItem($item, $list -> id);
-                }
+    public function saveList($list){
+        if ($list -> id > 0){
+            //Update or delete
+            if ($list -> idDeleted == 1){
+                $this -> dbAdapter -> deleteList($list);
+            } else {
+                $this -> dbAdapter -> updateList($list);
             }
+        } else {
+            //Insert
+            $list -> id = $this -> dbAdapter -> addList($list);
+        }
+
+        foreach($list -> items as $item){
+            saveItem($item);
+        }
+    }
+
+    public function saveItem($item){
+        if ($item -> id > 0){
+            //Update or delete
+            if ($item -> isDeleted == 1){
+                $this -> dbAdapter -> deleteItem($item);
+            } else {
+                $this -> dbAdapter -> updateItem($item);
+            }
+        } else {
+            //Insert
+            $item -> id = $this -> dbAdapter -> addItem($item, $item -> listId);
         }
     }
 }

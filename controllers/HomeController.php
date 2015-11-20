@@ -15,17 +15,32 @@ class HomeController extends BaseController {
         $this -> model = new HomeModel();
     }
 
+    //GET
     protected function index(){
         $this -> view -> output(null, null);
     }
 
+    //GET
     protected function getLists(){
         echo json_encode($this -> model -> get());
     }
 
+    //POST
     protected function saveLists(){
         $rawData = file_get_contents('php://input');
         $this -> model -> save(json_decode($rawData));
+    }
+
+    //POST
+    protected function saveList(){
+        $rawData = file_get_contents('php://input');
+        $this -> model -> saveList(json_decode($rawData));
+    }
+
+    //POST
+    protected function saveItem(){
+        $rawData = file_get_contents('php://input');
+        $this -> model -> saveItem(json_decode($rawData));
     }
 }
 ?>

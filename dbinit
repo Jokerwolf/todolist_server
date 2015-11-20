@@ -3,10 +3,11 @@ CREATE TABLE `items` (
   `list_id` bigint(20) DEFAULT NULL,
   `value` text NOT NULL,
   `is_completed` bit(1) DEFAULT b'0',
+  `is_deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `lists_items_idx` (`list_id`),
   CONSTRAINT `lists_items` FOREIGN KEY (`list_id`) REFERENCES `lists` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `lists` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,

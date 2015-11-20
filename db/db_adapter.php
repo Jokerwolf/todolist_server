@@ -37,7 +37,7 @@ class DB_Adapter {
         $stmt = $this -> db_connection -> prepare(
             "SELECT l.id AS list_id, l.title, i.id AS item_id, i.value, i.is_completed
              FROM lists l LEFT JOIN items i ON l.id = i.list_id
-             WHERE l.is_deleted = 0
+             WHERE l.is_deleted = 0 AND (i.id is null OR i.is_deleted = 0)
              ORDER BY l.id");
 
         $result = [];
@@ -95,6 +95,26 @@ class DB_Adapter {
         }
     }
 
+    function deleteList($list){
+        $stmt = $this -> db_connection -> prepare("UPDATE items
+            SET is_deleted = 1 WHERE list_id = ?");
+
+        $stmt -> bind_param('i', $list -> id);
+
+        if ($stmt -> execute()){
+            echo 'Deleted items <br />';
+        }
+
+        $stmt = $this -> db_connection -> prepare("UPDATE lists
+            SET is_deleted = 1 WHERE id = ?");
+
+        $stmt -> bind_param('i', $list -> id);
+
+        if ($stmt -> execute()){
+            echo 'Deleted list <br />';
+        }
+    }
+
     function addItem($item, $list_id){
         $stmt = $this -> db_connection -> prepare("INSERT INTO items
             (value, list_id, is_completed)
@@ -115,6 +135,17 @@ class DB_Adapter {
 
         if ($stmt -> execute()){
             echo 'Updated item <br />';
+        }
+    }
+
+    function deleteItem($item){
+        $stmt = $this -> db_connection -> prepare("UPDATE items
+            SET is_deleted = 1 WHERE id = ?");
+
+        $stmt -> bind_param('i', $item -> id);
+
+        if ($stmt -> execute()){
+            echo 'Deleted item <br />';
         }
     }
 

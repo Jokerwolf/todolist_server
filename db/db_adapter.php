@@ -80,6 +80,8 @@ class DB_Adapter {
         if ($stmt -> execute()){
             echo 'Added list <br />';
             return $stmt -> insert_id;
+        } else {
+            echo $stmt -> error;
         }
     }
 

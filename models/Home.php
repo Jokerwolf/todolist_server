@@ -16,8 +16,9 @@ class HomeModel extends BaseModel {
     public function saveList($list){
         if ($list -> id > 0){
             //Update or delete
-            if ($list -> idDeleted == 1){
+            if ($list -> isDeleted == 1){
                 $this -> dbAdapter -> deleteList($list);
+                $list = null;
             } else {
                 $this -> dbAdapter -> updateList($list);
             }
@@ -26,9 +27,13 @@ class HomeModel extends BaseModel {
             $list -> id = $this -> dbAdapter -> addList($list);
         }
 
-        foreach($list -> items as $item){
-            saveItem($item);
+        if ($list != null) {
+            foreach ($list->items as $item) {
+                saveItem($item);
+            }
         }
+
+        return $list;
     }
 
     public function saveItem($item){
@@ -36,6 +41,7 @@ class HomeModel extends BaseModel {
             //Update or delete
             if ($item -> isDeleted == 1){
                 $this -> dbAdapter -> deleteItem($item);
+                $item = null;
             } else {
                 $this -> dbAdapter -> updateItem($item);
             }
@@ -43,5 +49,7 @@ class HomeModel extends BaseModel {
             //Insert
             $item -> id = $this -> dbAdapter -> addItem($item, $item -> listId);
         }
+
+        return $item;
     }
 }

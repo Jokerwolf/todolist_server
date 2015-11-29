@@ -34,13 +34,17 @@ class HomeController extends BaseController {
     //POST
     protected function saveList(){
         $rawData = file_get_contents('php://input');
-        $this -> model -> saveList(json_decode($rawData));
+        $list = $this -> model -> saveList(json_decode($rawData));
+
+        echo json_encode($list);
     }
 
     //POST
     protected function saveItem(){
         $rawData = file_get_contents('php://input');
-        $this -> model -> saveItem(json_decode($rawData));
+        $item = $this -> model -> saveItem(json_decode($rawData));
+
+        echo json_encode($item);
     }
 }
 ?>

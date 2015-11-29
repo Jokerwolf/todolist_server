@@ -36,8 +36,8 @@ class DB_Adapter {
     function getUserLists(){
         $stmt = $this -> db_connection -> prepare(
             "SELECT l.id AS list_id, l.title, i.id AS item_id, i.value, i.is_completed
-             FROM lists l LEFT JOIN items i ON l.id = i.list_id
-             WHERE l.is_deleted = 0 AND (i.id is null OR i.is_deleted = 0)
+             FROM lists l LEFT JOIN items i ON l.id = i.list_id AND (i.id is null OR i.is_deleted = 0)
+             WHERE l.is_deleted = 0
              ORDER BY l.id");
 
         $result = [];
@@ -66,7 +66,6 @@ class DB_Adapter {
             }
         }
 
-        //var_dump($result);
         return $result;
     }
 
@@ -78,7 +77,6 @@ class DB_Adapter {
         $stmt -> bind_param('si', $list -> title, $this -> user_id);
 
         if ($stmt -> execute()){
-            echo 'Added list <br />';
             return $stmt -> insert_id;
         } else {
             echo $stmt -> error;
@@ -93,7 +91,6 @@ class DB_Adapter {
         $stmt -> bind_param('si', $list -> title, $list -> id);
 
         if ($stmt -> execute()){
-            echo 'Updated <br />';
         }
     }
 
@@ -104,7 +101,6 @@ class DB_Adapter {
         $stmt -> bind_param('i', $list -> id);
 
         if ($stmt -> execute()){
-            echo 'Deleted items <br />';
         }
 
         $stmt = $this -> db_connection -> prepare("UPDATE lists
@@ -113,7 +109,6 @@ class DB_Adapter {
         $stmt -> bind_param('i', $list -> id);
 
         if ($stmt -> execute()){
-            echo 'Deleted list <br />';
         }
     }
 
@@ -124,7 +119,6 @@ class DB_Adapter {
 
         $stmt -> bind_param('sii', $item -> text, $list_id, $item -> isDone);
         if ($stmt -> execute()){
-            echo 'Item added <br />';
             return $stmt -> insert_id;
         }
     }
@@ -136,7 +130,6 @@ class DB_Adapter {
         $stmt -> bind_param('sii', $item -> text, $item -> isDone, $item -> id);
 
         if ($stmt -> execute()){
-            echo 'Updated item <br />';
         }
     }
 
@@ -147,7 +140,6 @@ class DB_Adapter {
         $stmt -> bind_param('i', $item -> id);
 
         if ($stmt -> execute()){
-            echo 'Deleted item <br />';
         }
     }
 

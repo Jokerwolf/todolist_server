@@ -156,13 +156,11 @@ class DB_Adapter {
             $row = $this -> bind_result_array($stmt);
             if(!$stmt -> error) {
                 while($stmt -> fetch()){
-                    if ($row['id']){
-                        return true;
-                    }
+                    return $row['id'];
                 }
             }
         }
-        return false;
+        return null;
     }
 }
 ?>

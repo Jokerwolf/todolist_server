@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 
 class AccountController extends BaseController {
     public function __construct($action, $url_values){
@@ -15,10 +15,26 @@ class AccountController extends BaseController {
     }
 
     public function login(){
-        if($this -> model -> login($_POST['username'], $_POST['pwd'])){
+        $user_id = $this -> model -> login($_POST['username'], $_POST['pwd']);
+        if($user_id != null){
+            $_SESSION['user_id'] = $user_id;
             header("Location: /home/");
         } else {
+            session_unset();
             header("Location: /account/");
         }
+    }
+
+    public function logout(){
+        session_unset();
+        header("Location: /account/");
+    }
+
+    public function register(){
+
+    }
+
+    public function restore(){
+
     }
 }

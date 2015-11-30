@@ -5,6 +5,7 @@
  * Date: 27/10/15
  * Time: 23:54
  */
+session_start();
 
 class Loader {
     private $controller;
@@ -14,10 +15,12 @@ class Loader {
     public function __construct($url_values){
         $this -> url_values = $url_values;
 
-        if ($this -> url_values['controller'] == "") {
-            $this -> controller = "HomeController";
+        if (!isset($_SESSION['user_id'])){
+            $this -> controller = "AccountController";
+        } else if ($this -> url_values['controller'] == "") {
+                $this -> controller = "HomeController";
         } else {
-            $this->controller = $this -> url_values['controller'] ."Controller";
+                $this -> controller = $this -> url_values['controller'] ."Controller";
         }
 
         if ($this -> url_values['action'] == "") {
@@ -27,7 +30,7 @@ class Loader {
         }
 
         //DEBUG
-        //var_dump($this -> url_values);
+//        var_dump($this -> url_values);
     }
 
     public function createController(){

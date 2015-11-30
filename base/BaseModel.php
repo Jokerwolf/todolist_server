@@ -9,16 +9,16 @@
 require($_SERVER['DOCUMENT_ROOT']. "/server/db/db_adapter.php");
 require($_SERVER['DOCUMENT_ROOT']. "/server/db/db_controller.php");
 
+session_start();
 abstract class BaseModel {
     protected $viewModel;
     protected $dbAdapter;
 
-    //TODO Remove hardcode
-    protected $userId = 2;
+    protected $userId = -1;
 
     //create the base and utility objects available to all models on model creation
-    public function __construct()
-    {
+    public function __construct() {
+        $this -> userId = $_SESSION['user_id'];
         $this -> viewModel = new ViewModel();
         $this -> commonViewData();
         $this -> dbAdapter = new DB_Adapter(DB_Controller::call(), $this -> userId);

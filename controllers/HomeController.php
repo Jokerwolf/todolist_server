@@ -11,7 +11,7 @@ class HomeController extends BaseController {
         parent::__construct($action, $url_values);
 
         //create the model object
-        require(dirname(__FILE__) ."/../models/home.php");
+        require(dirname(__FILE__) . "/../models/home.php");
         $this -> model = new HomeModel();
     }
 

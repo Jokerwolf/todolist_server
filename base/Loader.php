@@ -16,9 +16,9 @@ class Loader {
         $this -> url_values = $url_values;
 
         if (!isset($_SESSION['user_id'])){
-            $this -> controller = "AccountController";
+            $this -> controller = "accountController";
         } else if ($this -> url_values['controller'] == "") {
-                $this -> controller = "HomeController";
+                $this -> controller = "homeController";
         } else {
                 $this -> controller = $this -> url_values['controller'] ."Controller";
         }
@@ -28,26 +28,23 @@ class Loader {
         } else {
             $this -> action = $this -> url_values['action'];
         }
-
-        //DEBUG
-//        var_dump($this -> url_values);
     }
 
     public function createController(){
         require(dirname(__FILE__). "/../controllers/" .$this -> controller. ".php");
 
         if (!class_exists($this -> controller)){
-            require(dirname(__FILE__) ."/../controllers/ErrorController.php");
+            require(dirname(__FILE__) . "/../controllers/errorController.php");
             return new ErrorController(BAD_URL, $this -> controller);
         }
 
         if (!in_array("BaseController", class_parents($this -> controller))){
-            require(dirname(__FILE__) ."/../controllers/ErrorController.php");
+            require(dirname(__FILE__) . "/../controllers/errorController.php");
             return new ErrorController(BAD_URL, $this -> controller);
         }
 
         if (!method_exists($this -> controller, $this -> action)){
-            require(dirname(__FILE__) ."/../controllers/ErrorController.php");
+            require(dirname(__FILE__) . "/../controllers/errorController.php");
             return new ErrorController(BAD_URL, $this -> action);
         }
 

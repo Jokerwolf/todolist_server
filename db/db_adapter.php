@@ -162,5 +162,20 @@ class DB_Adapter {
         }
         return null;
     }
+
+    public function register($username, $pwd){
+        $stmt = $this -> db_connection -> prepare(
+            "INSERT INTO users
+             (username, password)
+             VALUES (?, ?)");
+
+        $stmt -> bind_param('ss', $username, $pwd);
+
+        if ($stmt -> execute()){
+            return $stmt -> insert_id;
+        }
+
+        return null;
+    }
 }
 ?>
